@@ -1,0 +1,8 @@
+[build]
+  publish = "."
+
+[[plugins]]
+  package = "@netlify/plugin-lighthouse"
+
+[template.environment]
+  NETLIFY_NEXT_PLUGIN_SKIP = "true"

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gustavo Pol — Músico</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0c;
+      --surface: #111116;
+      --border: #222230;
+      --accent: #c8a96e;
+      --accent-dim: #7a6440;
+      --text: #ede8df;
+      --muted: #7a7570;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-mono: 'DM Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 14px;
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.5rem 4rem;
+      background: rgba(10,10,12,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 0 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-lines {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(200,169,110,0.04) 80px);
+    }
+    .hero-content { position: relative; max-width: 800px; }
+    .hero-tag {
+      font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 2rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .hero-tag::before {
+      content: ''; display: block; width: 40px; height: 1px; background: var(--accent);
+    }
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      line-height: 1.05;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+    h1 em { font-style: italic; color: var(--accent); }
+    .hero-sub {
+      font-size: 13px; color: var(--muted); max-width: 480px;
+      line-height: 2; margin-bottom: 3rem;
+    }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 0.75rem;
+      padding: 0.85rem 2rem;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+      transition: background 0.2s, color 0.2s;
+    }
+    .hero-cta:hover { background: var(--accent); color: var(--bg); }
+    .scroll-hint {
+      position: absolute; bottom: 2.5rem; right: 4rem;
+      font-size: 10px; letter-spacing: 0.2em; color: var(--muted);
+      text-transform: uppercase;
+      writing-mode: vertical-lr;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .scroll-hint::after {
+      content: ''; display: block; width: 1px; height: 60px; background: var(--muted);
+    }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 7rem 4rem; }
+    .section-label {
+      font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--accent-dim); margin-bottom: 4rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .section-label::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+    h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── SOBRE MÍ ── */
+    #about { background: var(--surface); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start;
+    }
+    .about-text p { color: var(--muted); margin-bottom: 1.2rem; line-height: 2; }
+    .about-stats {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+      margin-top: 3rem;
+    }
+    .stat-num {
+      font-family: var(--font-display); font-size: 2.8rem;
+      color: var(--accent); display: block; line-height: 1;
+    }
+    .stat-label { font-size: 11px; color: var(--muted); letter-spacing: 0.1em; }
+    .about-visual {
+      position: relative; padding-top: 3rem;
+    }
+    .vinyl {
+      width: 260px; height: 260px; border-radius: 50%;
+      border: 2px solid var(--border);
+      background: radial-gradient(circle at 50% 50%, #1a1a22 0%, #0a0a0c 70%);
+      position: relative; margin: 0 auto;
+      animation: spin 18s linear infinite;
+    }
+    .vinyl::before {
+      content: ''; position: absolute; inset: 20px;
+      border-radius: 50%; border: 1px solid var(--border);
+    }
+    .vinyl::after {
+      content: ''; position: absolute;
+      top: 50%; left: 50%; transform: translate(-50%,-50%);
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--accent);
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .grooves {
+      position: absolute; inset: 0; border-radius: 50%;
+      background: repeating-radial-gradient(circle, transparent, transparent 8px, rgba(255,255,255,0.02) 9px);
+    }
+
+    /* ── MÚSICA / PROYECTOS ── */
+    #music .projects-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2px;
+    }
+    .project-card {
+      background: var(--surface);
+      padding: 2.5rem;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s, transform 0.2s;
+      cursor: default;
+    }
+    .project-card:hover { border-color: var(--accent-dim); transform: translateY(-4px); }
+    .project-year { font-size: 10px; color: var(--accent); letter-spacing: 0.2em; margin-bottom: 1.5rem; }
+    .project-title {
+      font-family: var(--font-display); font-size: 1.4rem;
+      margin-bottom: 0.75rem; line-height: 1.2;
+    }
+    .project-desc { font-size: 12px; color: var(--muted); line-height: 1.9; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+    .tag {
+      font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase;
+      border: 1px solid var(--border); padding: 3px 10px; color: var(--muted);
+    }
+
+    /* ── ESCUCHAR ── */
+    #listen { background: var(--surface); }
+    .listen-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    .platform-links { display: flex; flex-direction: column; gap: 1px; }
+    .platform-link {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 1.5rem;
+      border: 1px solid var(--border);
+      text-decoration: none; color: var(--text);
+      font-size: 12px; letter-spacing: 0.05em;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .platform-link:hover { border-color: var(--accent); background: rgba(200,169,110,0.04); }
+    .platform-link .arrow { color: var(--accent); }
+
+    /* ── CONTACTO ── */
+    #contact { text-align: center; padding: 8rem 4rem; }
+    #contact h2 { margin-bottom: 1.5rem; }
+    #contact p { color: var(--muted); max-width: 480px; margin: 0 auto 3rem; line-height: 2; }
+    .contact-email {
+      font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2.5rem);
+      font-style: italic; color: var(--accent);
+      text-decoration: none; transition: opacity 0.2s;
+    }
+    .contact-email:hover { opacity: 0.7; }
+    .social-links { display: flex; justify-content: center; gap: 2rem; margin-top: 3rem; }
+    .social-links a {
+      font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none; transition: color 0.2s;
+    }
+    .social-links a:hover { color: var(--accent); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2rem 4rem;
+      border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 10px; color: var(--muted); letter-spacing: 0.1em;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      section, #hero { padding: 5rem 1.5rem; }
+      .about-grid, .listen-grid { grid-template-columns: 1fr; gap: 3rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+      .scroll-hint { display: none; }
+    }
+
+    /* ── FADE-IN ANIMATION ── */
+    .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-in.visible { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">G. Pol</span>
+  <ul class="nav-links">
+    <li><a href="#about">Sobre mí</a></li>
+    <li><a href="#music">Música</a></li>
+    <li><a href="#listen">Escuchar</a></li>
+    <li><a href="#contact">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-lines"></div>
+  <div class="hero-content">
+    <p class="hero-tag">Músico &amp; Compositor</p>
+    <h1>Gustavo<br><em>Pol</em></h1>
+    <p class="hero-sub">
+      Compositor e intérprete con raíces en la música contemporánea.
+      Sonidos que atraviesan fronteras entre géneros, emociones y silencios.
+    </p>
+    <a href="#music" class="hero-cta">Explorar mi obra →</a>
+  </div>
+  <span class="scroll-hint">Scroll</span>
+</section>
+
+<!-- SOBRE MÍ -->
+<section id="about">
+  <div class="section-label">01 — Sobre mí</div>
+  <div class="about-grid">
+    <div class="about-text fade-in">
+      <h2>La música<br>como lenguaje</h2>
+      <p>
+        Soy Gustavo Pol, músico y compositor con más de una década explorando los límites
+        de la música contemporánea. Mi trabajo combina la precisión técnica con una profunda
+        sensibilidad emocional.
+      </p>
+      <p>
+        He actuado en festivales internacionales, colaborado con artistas de distintas
+        culturas y producido obras que van desde el minimalismo instrumental hasta
+        producciones electrónicas de gran escala.
+      </p>
+      <p>
+        Con base en Barcelona, trabajo tanto en proyectos propios como en colaboraciones,
+        bandas sonoras y dirección artística.
+      </p>
+      <div class="about-stats">
+        <div>
+          <span class="stat-num">10+</span>
+          <span class="stat-label">Años de trayectoria</span>
+        </div>
+        <div>
+          <span class="stat-num">5</span>
+          <span class="stat-label">Álbumes publicados</span>
+        </div>
+        <div>
+          <span class="stat-num">30+</span>
+          <span class="stat-label">Países visitados</span>
+        </div>
+        <div>
+          <span class="stat-num">∞</span>
+          <span class="stat-label">Notas por venir</span>
+        </div>
+      </div>
+    </div>
+    <div class="about-visual fade-in">
+      <div class="vinyl"><div class="grooves"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MÚSICA -->
+<section id="music">
+  <div class="section-label">02 — Proyectos</div>
+  <h2 class="fade-in">Discografía<br>&amp; proyectos</h2>
+  <br><br>
+  <div class="projects-grid">
+    <div class="project-card fade-in">
+      <div class="project-year">2024</div>
+      <div class="project-title">Último álbum</div>
+      <p class="project-desc">
+        Actualiza este espacio con el nombre y descripción de tu álbum más reciente.
+        Un viaje sonoro que define tu sonido actual.
+      </p>
+      <div class="project-tags">
+        <span class="tag">Compositor</span>
+        <span class="tag">Producción</span>
+      </div>
+    </div>
+    <div class="project-card fade-in">
+      <div class="project-year">2022</div>
+      <div class="project-title">Colaboraciones</div>
+      <p class="project-desc">
+        Describe aquí tus colaboraciones más destacadas con otros artistas,
+        productores o instituciones culturales.
+      </p>
+      <div class="project-tags">
+        <span class="tag">Colaboración</span>
+        <span class="tag">Live</span>
+      </div>
+    </div>
+    <div class="project-card fade-in">
+      <div class="project-year">2020</div>
+      <div class="project-title">Bandas sonoras</div>
+      <p class="project-desc">
+        Espacio para tus trabajos en cine, teatro o publicidad.
+        La música al servicio de la narrativa visual.
+      </p>
+      <div class="project-tags">
+        <span class="tag">Cine</span>
+        <span class="tag">Teatro</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ESCUCHAR -->
+<section id="listen">
+  <div class="section-label">03 — Escuchar</div>
+  <div class="listen-grid">
+    <div class="fade-in">
+      <h2>Encuéntrame<br>en tu plataforma</h2>
+      <p style="color: var(--muted); margin-top: 1rem; line-height: 2;">
+        Mi música está disponible en todas las plataformas principales.
+        Actualiza los enlaces con tus perfiles reales.
+      </p>
+    </div>
+    <div class="platform-links fade-in">
+      <a href="https://open.spotify.com" target="_blank" class="platform-link">
+        <span>Spotify</span><span class="arrow">→</span>
+      </a>
+      <a href="https://music.apple.com" target="_blank" class="platform-link">
+        <span>Apple Music</span><span class="arrow">→</span>
+      </a>
+      <a href="https://soundcloud.com" target="_blank" class="platform-link">
+        <span>SoundCloud</span><span class="arrow">→</span>
+      </a>
+      <a href="https://bandcamp.com" target="_blank" class="platform-link">
+        <span>Bandcamp</span><span class="arrow">→</span>
+      </a>
+      <a href="https://youtube.com" target="_blank" class="platform-link">
+        <span>YouTube</span><span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contact">
+  <div class="section-label" style="justify-content: center; margin-bottom: 2rem;">04 — Contacto</div>
+  <h2 class="fade-in">Hablemos</h2>
+  <p class="fade-in">
+    Para conciertos, colaboraciones, bandas sonoras o simplemente para conectar.
+    Siempre abierto a nuevas conversaciones.
+  </p>
+  <a href="mailto:hola@gustavopol.com" class="contact-email fade-in">hola@gustavopol.com</a>
+  <div class="social-links fade-in">
+    <a href="https://instagram.com" target="_blank">Instagram</a>
+    <a href="https://youtube.com" target="_blank">YouTube</a>
+    <a href="https://soundcloud.com" target="_blank">SoundCloud</a>
+    <a href="https://bandcamp.com" target="_blank">Bandcamp</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2025 Gustavo Pol. Todos los derechos reservados.</span>
+  <span>gustavopol.com</span>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

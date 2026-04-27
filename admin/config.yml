@@ -1,0 +1,78 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images"
+public_folder: "/images"
+
+locale: es
+
+collections:
+  - name: "config"
+    label: "Configuración general"
+    files:
+      - name: "general"
+        label: "Datos del sitio"
+        file: "_data/general.json"
+        fields:
+          - { label: "Tu nombre", name: "nombre", widget: "string" }
+          - { label: "Subtítulo / profesión", name: "subtitulo", widget: "string" }
+          - { label: "Bio corta (héroe)", name: "bio_hero", widget: "text" }
+          - { label: "Email de contacto", name: "email", widget: "string" }
+
+  - name: "sobre_mi"
+    label: "Sobre mí"
+    files:
+      - name: "bio"
+        label: "Biografía"
+        file: "_data/sobre_mi.json"
+        fields:
+          - { label: "Título sección", name: "titulo", widget: "string" }
+          - { label: "Párrafo 1", name: "p1", widget: "text" }
+          - { label: "Párrafo 2", name: "p2", widget: "text" }
+          - { label: "Párrafo 3", name: "p3", widget: "text" }
+          - label: "Estadísticas"
+            name: "stats"
+            widget: "list"
+            fields:
+              - { label: "Número", name: "num", widget: "string" }
+              - { label: "Etiqueta", name: "label", widget: "string" }
+
+  - name: "proyectos"
+    label: "Proyectos / Discografía"
+    folder: "_data/proyectos"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Año", name: "año", widget: "string" }
+      - { label: "Descripción", name: "descripcion", widget: "text" }
+      - label: "Etiquetas"
+        name: "tags"
+        widget: "list"
+        field: { label: "Etiqueta", name: "tag", widget: "string" }
+
+  - name: "plataformas"
+    label: "Plataformas de música"
+    files:
+      - name: "links"
+        label: "Enlaces"
+        file: "_data/plataformas.json"
+        fields:
+          - { label: "Spotify URL", name: "spotify", widget: "string" }
+          - { label: "Apple Music URL", name: "apple", widget: "string" }
+          - { label: "SoundCloud URL", name: "soundcloud", widget: "string" }
+          - { label: "Bandcamp URL", name: "bandcamp", widget: "string" }
+          - { label: "YouTube URL", name: "youtube", widget: "string" }
+
+  - name: "redes"
+    label: "Redes sociales"
+    files:
+      - name: "social"
+        label: "Perfiles"
+        file: "_data/redes.json"
+        fields:
+          - { label: "Instagram URL", name: "instagram", widget: "string" }
+          - { label: "YouTube URL", name: "youtube", widget: "string" }
+          - { label: "SoundCloud URL", name: "soundcloud", widget: "string" }
+          - { label: "Bandcamp URL", name: "bandcamp", widget: "string" }
